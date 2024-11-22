@@ -1,0 +1,111 @@
+@startuml
+
+class Pieza {
+    - String color
+    - int fila
+    - int columna
+    + Pieza(String color, int fila, int columna)
+    + obtenerColor(): String
+    + obtenerFila(): int
+    + obtenerColumna(): int
+    + mover(int nuevaFila, int nuevaColumna)
+    + esMovimientoValido(int nuevaFila, int nuevaColumna, Pieza[][] tablero): boolean
+}
+
+class Torre {
+    + Torre(String color, int fila, int columna)
+    + esMovimientoValido(int nuevaFila, int nuevaColumna, Pieza[][] tablero): boolean
+}
+
+class Reina {
+    + Reina(String color, int fila, int columna)
+    + esMovimientoValido(int nuevaFila, int nuevaColumna, Pieza[][] tablero): boolean
+}
+
+class Rey {
+    + Rey(String color, int fila, int columna)
+    + esMovimientoValido(int nuevaFila, int nuevaColumna, Pieza[][] tablero): boolean
+}
+
+class Caballo {
+    + Caballo(String color, int fila, int columna)
+    + esMovimientoValido(int nuevaFila, int nuevaColumna, Pieza[][] tablero): boolean
+}
+
+class Alfil {
+    + Alfil(String color, int fila, int columna)
+    + esMovimientoValido(int nuevaFila, int nuevaColumna, Pieza[][] tablero): boolean
+}
+
+class Peon {
+    + Peon(String color, int fila, int columna)
+    + esMovimientoValido(int nuevaFila, int nuevaColumna, Pieza[][] tablero): boolean
+}
+
+class VistaAjedrez {
+    - JButton[][] botones
+    - JButton botonGuardar
+    - JButton botonSalir
+    - JButton botonReiniciar
+    - JLabel etiquetaTurno
+    - final Color COLOR_CLARO
+    - final Color COLOR_OSCURO
+    + VistaAjedrez()
+    + agregarEscuchadorGuardar(ActionListener escuchador)
+    + agregarEscuchadorSalir(ActionListener escuchador)
+    + agregarEscuchadorReiniciar(ActionListener escuchador)
+    + obtenerBoton(int fila, int columna)
+    + cargarImagenPieza(int fila, int columna, String rutaImagen)
+    + actualizarTablero(Pieza[][] tablero)
+    + mostrarPiezasEnVista(Pieza[][] tablero)
+    + mostrarTurno(String turno)
+    + resaltarCasilla(int fila, int columna, Color color)
+    + restaurarColoresOriginales()
+    + limpiarColoresCasillas()
+}
+
+class ControladorAjedrez {
+    - Tablero tablero
+    - VistaAjedrez vista
+    - int filaSeleccionada
+    - int columnaSeleccionada
+    - boolean esTurnoBlanco
+    - PGNWriter pgnWriter
+
+    + ControladorAjedrez(Tablero tablero, VistaAjedrez vista)
+    - agregarEscuchadoresTablero()
+    - manejarClick(int fila, int columna)
+    - alternarTurno()
+    - verificarEstadoDelJuego()
+    - estaElReyEnElTablero(String color) : boolean
+    - obtenerNotacionPieza(Pieza pieza) : String
+    - obtenerNotacionPosicion(int fila, int columna) : String
+    - guardarPartida(String jugadorBlanco, String jugadorNegro)
+}
+
+class Tablero {
+    - Pieza[][] tablero
+    + Tablero()
+    - void inicializarTablero()
+    + Pieza obtenerPieza(int fila, int columna)
+    + boolean moverPieza(int filaOrigen, int columnaOrigen, int filaDestino, int columnaDestino)
+    + void mostrarTablero()
+    + Pieza[][] obtenerTablero()
+    + List<int[]> obtenerMovimientosPosibles(int fila, int columna)
+}
+
+' Relaciones de herencia
+Pieza <|-- Torre
+Pieza <|-- Reina
+Pieza <|-- Rey
+Pieza <|-- Caballo
+Pieza <|-- Alfil
+Pieza <|-- Peon
+
+' Relaciones entre clases
+Tablero "1" *-- "8" Pieza
+ControladorAjedrez "1" *-- "1" Tablero
+ControladorAjedrez "1" *-- "1" VistaAjedrez
+
+@enduml
+
